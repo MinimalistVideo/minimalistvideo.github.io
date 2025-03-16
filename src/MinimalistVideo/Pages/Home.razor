@@ -44,7 +44,7 @@
                         <script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/E-v1.js"></script>
                     }
 
-                    @if (!(ValidYouTube || ValidVimeo || ValidTikTok || ValidWistia))
+                    @if (_pageLoaded && !(ValidYouTube || ValidVimeo || ValidTikTok || ValidWistia))
                     {
                         <MudText Align="Align.Center">Video Failed to Load</MudText>
                     }
