@@ -44,7 +44,7 @@
                         <script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/E-v1.js"></script>
                     }
 
-                    @if (_pageLoaded && !(ValidYouTube || ValidVimeo || ValidTikTok || ValidWistia))
+                    @if (!(ValidYouTube || ValidVimeo || ValidTikTok || ValidWistia))
                     {
                         <MudText Align="Align.Center">Video Failed to Load</MudText>
                     }
@@ -90,8 +90,16 @@
     private bool ValidTikTok => !string.IsNullOrWhiteSpace(TikTok) && !string.IsNullOrWhiteSpace(TikTokUserHandle);
     private bool ValidWistia => !string.IsNullOrWhiteSpace(Wistia);
 
-    protected override void OnInitialized()
+    protected override void OnAfterRender(bool firstRender)
     {
-        _pageLoaded = true;
-    } 
+        if(!firstRender)
+        {
+            this.InvokeAsync(() =>
+                  {
+                      _pageLoaded = true;
+
+                      this.StateHasChanged();
+                  });
+        }     
+    }
 }
